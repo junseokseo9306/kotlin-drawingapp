@@ -36,7 +36,6 @@ class DrawObjects(context: Context?) : View(context) {
         super.onDraw(canvas)
         val button = Button(context)
         button.text = "사각형"
-        button
         val setLocation = ConstraintLayout.LayoutParams(
             ViewGroup.LayoutParams.WRAP_CONTENT,
             ViewGroup.LayoutParams.WRAP_CONTENT
@@ -47,7 +46,6 @@ class DrawObjects(context: Context?) : View(context) {
         setBackgroundColor(Color.WHITE)
 
         val loopCount = rectangles.count()
-
         for(i in 0 until loopCount) {
             canvas?.drawRect(rectangles[i].rectangles, rectangles[i].paint)
         }
