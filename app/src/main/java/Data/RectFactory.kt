@@ -6,7 +6,10 @@ import android.graphics.RectF
 
 class RectFactory : RandomRectGenerator {
     override fun makeRandomRect(): Rectangles {
-        val randomID = (65..128).random().toChar().toString()
+        val charA = (97..122).random().toChar()
+        val charB = (97..122).random().toChar()
+        val charC = (97..122).random().toChar()
+        val randomID = "$charA$charB$charC"
         val x = (10..600).random().toFloat()
         val y = (90..500).random().toFloat()
         val w = 150.toFloat()
