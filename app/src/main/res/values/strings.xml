@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">DrawingApp</string>
+    <string name="rectangle">사각형</string>
+</resources>
