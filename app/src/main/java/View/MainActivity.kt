@@ -24,9 +24,11 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        val button2 = findViewById<Button>(R.id.make_square_button)
-
+        val customView = findViewById<DrawObjects>(R.id.custom_canvas)
+        val button = findViewById<Button>(R.id.make_square_button)
+        button.setOnClickListener {
+            customView.makeRectangle()
+        }
     }
 }
 
@@ -35,54 +37,41 @@ class DrawObjects(context: Context?, attrs: AttributeSet?) : View(context, attrs
     private val domain = Domain()
     private var rectangles: MutableList<Rectangles> = domain.getRandomRect()
 
+    fun makeRectangle () {
+        rectangles = domain.getRandomRect()
+        invalidate()
+    }
+
     override fun onDraw(canvas: Canvas?) {
         super.onDraw(canvas)
-
-        val button = Button(context)
-        button.text = "사각형"
-        val setLocation = ConstraintLayout.LayoutParams(
-            ViewGroup.LayoutParams.WRAP_CONTENT,
-            ViewGroup.LayoutParams.WRAP_CONTENT
-        )
-        button.layoutParams = setLocation
-        val layout = (this.parent) as ConstraintLayout
-        layout.addView(button)
-
-
-        setBackgroundColor(Color.DKGRAY)
-
         val loopCount = rectangles.count()
         for(i in 0 until loopCount) {
             canvas?.drawRect(rectangles[i].rectangles, rectangles[i].paint)
         }
-        button.setOnClickListener {
-            rectangles = domain.getRandomRect()
-            invalidate()
-        }
     }
 
-//    override fun onTouchEvent(event: MotionEvent?): Boolean {
-//
-//        val x = event?.x
-//        val y = event?.y
-//
-//        when(event?.action) {
-//            MotionEvent.ACTION_DOWN ->
-//
-//
-//            MotionEvent.ACTION_MOVE ->
-//
-//
-//            MotionEvent.ACTION_UP ->
-//
-//            else ->
-//        }
-//
-//
-//
-//
-//        return super.onTouchEvent(event)
-//
-//
-//    }
+    override fun onTouchEvent(event: MotionEvent?): Boolean {
+
+        val x = event?.x
+        val y = event?.y
+
+        when(event?.action) {
+            MotionEvent.ACTION_DOWN ->
+
+
+            MotionEvent.ACTION_MOVE ->
+
+
+            MotionEvent.ACTION_UP ->
+
+            else ->
+        }
+
+
+
+
+        return super.onTouchEvent(event)
+
+
+    }
 }

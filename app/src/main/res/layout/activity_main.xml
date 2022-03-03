@@ -20,8 +20,10 @@
     </FrameLayout>
 
     <View.DrawObjects
-        android:layout_width="550dp"
+        android:id="@+id/custom_canvas"
+        android:layout_width="660dp"
         android:layout_height="wrap_content"
+        android:background="@color/black"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
