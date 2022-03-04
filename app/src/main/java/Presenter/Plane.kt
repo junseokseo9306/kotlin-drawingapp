@@ -1,13 +1,13 @@
-package Data
+package Presenter
 
-import Presenter.GenerateRectangle
-import android.graphics.Paint
-import android.graphics.RectF
+import Data.RectFactory
+import Data.Rectangle
 
 class Plane {
     lateinit var factory: GenerateRectangle
     var rectangleList = mutableListOf<Rectangle>()
-    private var rectangleStrokeList = mutableListOf<Rectangle>()
+    var rectangleStrokeList = mutableListOf<Rectangle>()
+
     fun getRandomRect(): MutableList<Rectangle> {
         factory = RectFactory()
         rectangleList.add(factory.makeRandomRect())
