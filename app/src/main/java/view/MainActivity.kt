@@ -1,4 +1,4 @@
-package View
+package view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -11,8 +11,13 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         val customView = findViewById<DrawObjects>(R.id.custom_canvas)
         val button = findViewById<Button>(R.id.make_square_button)
+        val removeButton = findViewById<Button>(R.id.remove_square_button)
         button.setOnClickListener {
             customView.makeRectangle()
         }
+        removeButton.setOnClickListener {
+            customView.removeRectangle()
+        }
+
     }
 }
