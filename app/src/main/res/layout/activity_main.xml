@@ -35,6 +35,20 @@
 
     </TextView>
 
+    <Button
+        android:id="@+id/textview_background_color_change"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:layout_marginEnd="20dp"
+        tools:text="change"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textview_background"
+        app:layout_constraintWidth_percent=".2"
+        >
+
+    </Button>
+
     <TextView
         android:id="@+id/square_visibility"
         android:layout_width="0dp"
@@ -46,7 +60,7 @@
         android:textAlignment="center"
         android:textSize="20sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textview_background"
+        app:layout_constraintTop_toBottomOf="@id/textview_background_color_change"
         app:layout_constraintWidth_percent=".2">
 
     </TextView>

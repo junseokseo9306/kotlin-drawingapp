@@ -15,24 +15,17 @@ import com.google.android.material.snackbar.Snackbar
 import presenter.Contract
 import presenter.Presenter
 
-class DrawObjects(context: Context, attributeSet: AttributeSet?) :
+class DrawObjects(context: Context, attributeSet: AttributeSet) :
     ConstraintLayout(context, attributeSet), Contract.CustomView {
     private var presenter: Contract.Presenter = Presenter()
     private var rectangles: MutableList<Rectangle> = mutableListOf()
     private var rectangleStrokes: MutableList<Rectangle> = mutableListOf()
-    private lateinit var listener: CustomListener
+    var customListener: CustomListener? = null
     private val TAG = "CustomView"
+    private var colorNumber: Int = 0
 
-    constructor(context: Context, attributeSet: AttributeSet?, listener: CustomListener) : this(
-        context,
-        attributeSet
-    ) {
-        this.listener = listener
-    }
-
-    fun countRectangles():String {
+    fun countRectangles(): String {
         return rectangles.count().toString()
-
     }
 
     fun makeRectangle() {
@@ -40,13 +33,16 @@ class DrawObjects(context: Context, attributeSet: AttributeSet?) :
         invalidate()
     }
 
-    fun removeRectangle() {
+    fun removeRectangleAndStrokes() {
         rectangles.clear()
+        rectangleStrokes.clear()
         invalidate()
     }
 
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
+
+
         Log.d(TAG, "onAttachedWindow")
     }
 
@@ -94,10 +90,15 @@ class DrawObjects(context: Context, attributeSet: AttributeSet?) :
         rectangles.forEach { rectangle ->
             if (presenter.isRectangle(x, y, rectangle)) {
                 rectangleStrokes = presenter.getStrokes(rectangle)
+                getRectangleColor(rectangle)
                 return
             }
         }
         rectangleStrokes.clear()
+    }
+
+    private fun getRectangleColor(rectangle: Rectangle){
+        customListener?.isClicked(rectangle.paint.color.toString())
     }
 
     override fun drawRectangle(canvas: Canvas?, rectangles: MutableList<Rectangle>) {

@@ -1,5 +1,5 @@
 package view
 
 interface CustomListener {
-    fun isClicked(numbers: Int)
+    fun isClicked(numbers: String)
 }
