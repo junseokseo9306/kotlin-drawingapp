@@ -1,5 +1,7 @@
 package data
 
+import android.graphics.RectF
+
 class Plane {
     fun setRandomRect() {
         val factory = RectFactory()
@@ -26,6 +28,10 @@ class Plane {
 
     fun setStrokesListClear() {
         Repository.removeStroke()
+    }
+
+    fun setRectangleColorOrNull(rectangle: Rectangle): MutableList<Rectangle>? {
+        return Repository.changeRectangleColor(rectangle)
     }
 
     fun onRectangle(x: Float?, y: Float?, rectangle: Rectangle): Boolean {

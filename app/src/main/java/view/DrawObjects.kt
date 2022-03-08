@@ -6,23 +6,18 @@ import android.graphics.Canvas
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
-import android.view.View
-import android.widget.Button
-import android.widget.TextView
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.example.app.R
-import com.google.android.material.snackbar.Snackbar
 import presenter.Contract
 import presenter.Presenter
 
 class DrawObjects(context: Context, attributeSet: AttributeSet) :
     ConstraintLayout(context, attributeSet), Contract.CustomView {
+    private var rectangle: Rectangle? = null
     private var presenter: Contract.Presenter = Presenter()
     private var rectangles: MutableList<Rectangle> = mutableListOf()
     private var rectangleStrokes: MutableList<Rectangle> = mutableListOf()
     var customListener: CustomListener? = null
     private val TAG = "CustomView"
-    private var colorNumber: Int = 0
 
     fun countRectangles(): String {
         return rectangles.count().toString()
@@ -39,10 +34,16 @@ class DrawObjects(context: Context, attributeSet: AttributeSet) :
         invalidate()
     }
 
+    fun changeRectangleColor() {
+        if(rectangle != null) {
+            val nonNullRectangle = rectangle as Rectangle
+            rectangles = presenter.setRectangleColor(nonNullRectangle)!!
+            invalidate()
+        }
+    }
+
     override fun onAttachedToWindow() {
         super.onAttachedToWindow()
-
-
         Log.d(TAG, "onAttachedWindow")
     }
 
@@ -97,8 +98,9 @@ class DrawObjects(context: Context, attributeSet: AttributeSet) :
         rectangleStrokes.clear()
     }
 
-    private fun getRectangleColor(rectangle: Rectangle){
-        customListener?.isClicked(rectangle.paint.color.toString())
+    private fun getRectangleColor(rectangle: Rectangle) {
+        this.rectangle = rectangle
+        customListener?.isClicked("#${Integer.toHexString(rectangle.paint.color)}")
     }
 
     override fun drawRectangle(canvas: Canvas?, rectangles: MutableList<Rectangle>) {

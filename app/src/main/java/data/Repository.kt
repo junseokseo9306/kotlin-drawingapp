@@ -23,4 +23,20 @@ object Repository {
         rectangleStrokeLists.clear()
     }
 
+    fun changeRectangleColor(rectangle: Rectangle): MutableList<Rectangle>? {
+        rectanglesList.forEach { rectangleInTheList ->
+            if(rectangleInTheList.id == rectangle.id){
+                rectangleInTheList.apply {
+                    val r = (0..255).random()
+                    val g = (0..255).random()
+                    val b = (0..255).random()
+                    val a = (200..255).random()
+                    this.paint.setARGB(r, g, b, a)
+                }
+                return rectangles
+            }
+        }
+        return null
+    }
+
 }

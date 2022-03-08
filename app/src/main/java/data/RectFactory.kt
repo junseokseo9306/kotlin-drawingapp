@@ -31,8 +31,18 @@ class RectFactory {
         val right = rectangle.rectangles.right
         val top = rectangle.rectangles.top
         val paint = Paint()
-        paint.style = Paint.Style.FILL_AND_STROKE
+        paint.style = Paint.Style.STROKE
         paint.color = Color.WHITE
         return Rectangle("Stroke", RectF(left, top, right, bottom), paint)
+    }
+
+    fun changeRectangleColor(rectangle: Rectangle): Rectangle {
+        return rectangle.apply {
+            val r = (0..255).random()
+            val g = (0..255).random()
+            val b = (0..255).random()
+            val a = (200..255).random()
+            this.paint.setARGB(r, g, b, a)
+        }
     }
 }

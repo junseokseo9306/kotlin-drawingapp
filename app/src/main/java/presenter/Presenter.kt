@@ -3,7 +3,7 @@ package presenter
 import data.Plane
 import data.Rectangle
 
-class Presenter : Contract.Presenter{
+class Presenter : Contract.Presenter {
     private val plane = Plane()
 
     override fun getRectangles(): MutableList<Rectangle> {
@@ -26,5 +26,9 @@ class Presenter : Contract.Presenter{
 
     override fun removeStrokes() {
         plane.setStrokesListClear()
+    }
+
+    override fun setRectangleColor(rectangle: Rectangle): MutableList<Rectangle>? {
+        return plane.setRectangleColorOrNull(rectangle)
     }
 }
