@@ -1,7 +1,5 @@
 package data
 
-import android.graphics.RectF
-
 class Plane {
     fun setRandomRect() {
         val factory = RectFactory()

@@ -35,14 +35,4 @@ class RectFactory {
         paint.color = Color.WHITE
         return Rectangle("Stroke", RectF(left, top, right, bottom), paint)
     }
-
-    fun changeRectangleColor(rectangle: Rectangle): Rectangle {
-        return rectangle.apply {
-            val r = (0..255).random()
-            val g = (0..255).random()
-            val b = (0..255).random()
-            val a = (200..255).random()
-            this.paint.setARGB(r, g, b, a)
-        }
-    }
 }
