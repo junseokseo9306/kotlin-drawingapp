@@ -2,10 +2,14 @@ package view
 
 import data.Rectangle
 import android.content.Context
+import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.util.AttributeSet
 import android.util.Log
+import android.util.TypedValue
 import android.view.MotionEvent
+import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import presenter.Contract
 import presenter.Presenter
@@ -16,6 +20,7 @@ class DrawObjects(context: Context, attributeSet: AttributeSet) :
     private var presenter: Contract.Presenter = Presenter()
     private var rectangles: MutableList<Rectangle> = mutableListOf()
     private var rectangleStrokes: MutableList<Rectangle> = mutableListOf()
+    private var bitmapImages: MutableList<Bitmap> = mutableListOf()
     var customListener: CustomListener? = null
     private val TAG = "CustomView"
 
@@ -62,6 +67,7 @@ class DrawObjects(context: Context, attributeSet: AttributeSet) :
         Log.d(TAG, "onDraw")
         drawRectangle(canvas, rectangles)
         drawRectangleStroke(canvas, rectangleStrokes)
+        drawImages(bitmapImages)
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
@@ -115,6 +121,26 @@ class DrawObjects(context: Context, attributeSet: AttributeSet) :
     ) {
         rectanglesStrokesList.forEach { stroke ->
             canvas?.drawRect(stroke.rectangles, stroke.paint)
+        }
+    }
+
+    fun loadImages(bitmapImages: MutableList<Bitmap>) {
+        this.bitmapImages = bitmapImages
+    }
+
+    fun drawImages(bitmapImages: MutableList<Bitmap>) {
+        if(bitmapImages.count() != 0) {
+            var imageView = ImageView(context)
+            imageView.setImageBitmap(bitmapImages[0])
+            var constraintParam = LayoutParams(
+                150,
+                150
+            )
+            constraintParam.topToTop = LayoutParams.PARENT_ID
+            constraintParam.bottomToBottom = LayoutParams.PARENT_ID
+            constraintParam.leftMargin = 800
+            var image = (this.parent) as ConstraintLayout
+            image.addView(imageView, constraintParam)
         }
     }
 }

@@ -41,11 +41,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_marginEnd="20dp"
-        tools:text="change"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textview_background"
         app:layout_constraintWidth_percent=".2"
-        >
+        tools:text="change">
 
     </Button>
 
@@ -117,6 +116,21 @@
         app:layout_constraintWidth_percent=".2">
 
     </TextView>
+
+    <Button
+        android:id="@+id/insert_photo_button"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:background="@color/white"
+        android:text="@string/load_photo"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/textview_rectangle_count"
+        app:layout_constraintWidth_percent=".2">
+
+    </Button>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
 
