@@ -16,6 +16,8 @@ interface Contract {
         fun removeStrokes()
 
         fun setRectangleColor(rectangle: Rectangle): MutableList<Rectangle>?
+
+        fun getImageRectangle(): MutableList<Rectangle>
     }
 
     interface CustomView {

@@ -6,10 +6,7 @@ import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.util.AttributeSet
 import android.util.Log
-import android.util.TypedValue
 import android.view.MotionEvent
-import android.view.ViewGroup
-import android.widget.ImageView
 import androidx.constraintlayout.widget.ConstraintLayout
 import presenter.Contract
 import presenter.Presenter
@@ -21,6 +18,7 @@ class DrawObjects(context: Context, attributeSet: AttributeSet) :
     private var rectangles: MutableList<Rectangle> = mutableListOf()
     private var rectangleStrokes: MutableList<Rectangle> = mutableListOf()
     private var bitmapImages: MutableList<Bitmap> = mutableListOf()
+    private var bitmapRectangles: MutableList<Rectangle> = mutableListOf()
     var customListener: CustomListener? = null
     private val TAG = "CustomView"
 
@@ -36,6 +34,9 @@ class DrawObjects(context: Context, attributeSet: AttributeSet) :
     fun removeRectangleAndStrokes() {
         rectangles.clear()
         rectangleStrokes.clear()
+        bitmapImages.clear()
+        bitmapRectangles.clear()
+        presenter.removeStrokes()
         invalidate()
     }
 
@@ -67,7 +68,7 @@ class DrawObjects(context: Context, attributeSet: AttributeSet) :
         Log.d(TAG, "onDraw")
         drawRectangle(canvas, rectangles)
         drawRectangleStroke(canvas, rectangleStrokes)
-        drawImages(bitmapImages)
+        drawImages(bitmapImages, canvas)
     }
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
@@ -75,7 +76,8 @@ class DrawObjects(context: Context, attributeSet: AttributeSet) :
         val y = event?.y
         when (event?.action) {
             MotionEvent.ACTION_DOWN -> {
-                updateRectangleStrokeList(x, y, rectangles)
+                updateRectangleStrokeList(x, y, rectangles, bitmapRectangles)
+//                updateImageRectangleStrokeList(x, y, bitmapRectangles)
                 invalidate()
                 return true
             }
@@ -92,9 +94,13 @@ class DrawObjects(context: Context, attributeSet: AttributeSet) :
     private fun updateRectangleStrokeList(
         x: Float?,
         y: Float?,
-        rectangles: MutableList<Rectangle>
+        rectangles: MutableList<Rectangle>,
+        imageRectangles: MutableList<Rectangle>
     ) {
-        rectangles.forEach { rectangle ->
+        val unifiedRectangles: MutableList<Rectangle> = mutableListOf()
+        unifiedRectangles.addAll(rectangles)
+        unifiedRectangles.addAll(imageRectangles)
+        unifiedRectangles.forEach { rectangle ->
             if (presenter.isRectangle(x, y, rectangle)) {
                 rectangleStrokes = presenter.getStrokes(rectangle)
                 getRectangleColor(rectangle)
@@ -104,14 +110,28 @@ class DrawObjects(context: Context, attributeSet: AttributeSet) :
         rectangleStrokes.clear()
     }
 
+//    private fun updateImageRectangleStrokeList(
+//        x: Float?,
+//        y: Float?,
+//        rectangles: MutableList<Rectangle>
+//    ) {
+//        rectangles.forEach { rectangle ->
+//            if (presenter.isRectangle(x, y, rectangle)) {
+//                rectangleStrokes = presenter.getStrokes(rectangle)
+//                return
+//            }
+//        }
+//        rectangleStrokes.clear()
+//    }
+
     private fun getRectangleColor(rectangle: Rectangle) {
         this.rectangle = rectangle
-        customListener?.isClicked("#${Integer.toHexString(rectangle.paint.color)}")
+        customListener?.isClicked("#${rectangle.paint?.let { Integer.toHexString(it.color) }}")
     }
 
     override fun drawRectangle(canvas: Canvas?, rectangles: MutableList<Rectangle>) {
         rectangles.forEach { square ->
-            canvas?.drawRect(square.rectangles, square.paint)
+            square.paint?.let { canvas?.drawRect(square.rectangles, it) }
         }
     }
 
@@ -120,27 +140,24 @@ class DrawObjects(context: Context, attributeSet: AttributeSet) :
         rectanglesStrokesList: MutableList<Rectangle>
     ) {
         rectanglesStrokesList.forEach { stroke ->
-            canvas?.drawRect(stroke.rectangles, stroke.paint)
+            stroke.paint?.let { canvas?.drawRect(stroke.rectangles, it) }
         }
     }
 
-    fun loadImages(bitmapImages: MutableList<Bitmap>) {
+    fun saveImages(bitmapImages: MutableList<Bitmap>) {
         this.bitmapImages = bitmapImages
+        makeImageRectangle()
     }
 
-    fun drawImages(bitmapImages: MutableList<Bitmap>) {
+    private fun drawImages(bitmapImages: MutableList<Bitmap>, canvas: Canvas?) {
         if(bitmapImages.count() != 0) {
-            var imageView = ImageView(context)
-            imageView.setImageBitmap(bitmapImages[0])
-            var constraintParam = LayoutParams(
-                150,
-                150
-            )
-            constraintParam.topToTop = LayoutParams.PARENT_ID
-            constraintParam.bottomToBottom = LayoutParams.PARENT_ID
-            constraintParam.leftMargin = 800
-            var image = (this.parent) as ConstraintLayout
-            image.addView(imageView, constraintParam)
+            for(index in 0 until bitmapImages.count()) {
+                canvas?.drawBitmap(bitmapImages[index],null, bitmapRectangles[index].rectangles, null )
+            }
         }
+    }
+
+    private fun makeImageRectangle() {
+        bitmapRectangles = presenter.getImageRectangle()
     }
 }

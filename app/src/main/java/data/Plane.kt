@@ -32,6 +32,15 @@ class Plane {
         return Repository.changeRectangleColor(rectangle)
     }
 
+    fun setImageRect() {
+        val factory = RectFactory()
+        Repository.addImageRect(factory.makeImageRect())
+    }
+
+    fun getImageRect(): MutableList<Rectangle> {
+        return Repository.imagesRectangleStrokes
+    }
+
     fun onRectangle(x: Float?, y: Float?, rectangle: Rectangle): Boolean {
         val bottom = rectangle.rectangles.bottom
         val left = rectangle.rectangles.left

@@ -7,6 +7,9 @@ object Repository {
     private var rectangleStrokeLists = mutableListOf<Rectangle>()
     val rectangleStrokes: MutableList<Rectangle> = rectangleStrokeLists
 
+    private var imageRectangleStrokeList = mutableListOf<Rectangle>()
+    val imagesRectangleStrokes:MutableList<Rectangle> = imageRectangleStrokeList
+
     fun addRectangle(rectangle: Rectangle) {
         rectanglesList.add(rectangle)
     }
@@ -23,6 +26,10 @@ object Repository {
         rectangleStrokeLists.clear()
     }
 
+    fun addImageRect(rectangle: Rectangle) {
+        imageRectangleStrokeList.add(rectangle)
+    }
+
     fun changeRectangleColor(rectangle: Rectangle): MutableList<Rectangle>? {
         rectanglesList.forEach { rectangleInTheList ->
             if(rectangleInTheList.id == rectangle.id){
@@ -31,7 +38,7 @@ object Repository {
                     val g = (0..255).random()
                     val b = (0..255).random()
                     val a = (200..255).random()
-                    this.paint.setARGB(r, g, b, a)
+                    this.paint?.setARGB(r, g, b, a)
                 }
                 return rectangles
             }

@@ -6,7 +6,3 @@ import android.graphics.Bitmap
 interface CustomListener {
     fun isClicked(numbers: String)
 }
-
-interface ImageListener {
-    fun addImages(bitmaps: MutableList<Bitmap>)
-}

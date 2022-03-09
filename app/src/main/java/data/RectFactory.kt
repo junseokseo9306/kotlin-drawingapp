@@ -35,4 +35,17 @@ class RectFactory {
         paint.color = Color.WHITE
         return Rectangle("Stroke", RectF(left, top, right, bottom), paint)
     }
+
+    fun makeImageRect(): Rectangle {
+        val squareWidth = 150.toFloat()
+        val squareHeight = 150.toFloat()
+        val charA = (1..100).random()
+        val id = "image:$charA"
+        val x = (0..1000).random().toFloat()
+        val y = (0..1000).random().toFloat()
+        val w = x + squareWidth
+        val h = y + squareHeight
+        return Rectangle(id, RectF(x, y, w, h), null)
+    }
+
 }

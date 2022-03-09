@@ -54,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
         photoLoader.setOnClickListener {
             startForResult.launch("image/*")
-            customView.loadImages(bitmapImages)
+            customView.saveImages(bitmapImages)
         }
     }
 }

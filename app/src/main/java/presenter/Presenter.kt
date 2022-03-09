@@ -31,4 +31,9 @@ class Presenter : Contract.Presenter {
     override fun setRectangleColor(rectangle: Rectangle): MutableList<Rectangle>? {
         return plane.setRectangleColorOrNull(rectangle)
     }
+
+    override fun getImageRectangle(): MutableList<Rectangle> {
+        plane.setImageRect()
+        return plane.getImageRect()
+    }
 }
