@@ -77,7 +77,6 @@ class DrawObjects(context: Context, attributeSet: AttributeSet) :
         when (event?.action) {
             MotionEvent.ACTION_DOWN -> {
                 updateRectangleStrokeList(x, y, rectangles, bitmapRectangles)
-//                updateImageRectangleStrokeList(x, y, bitmapRectangles)
                 invalidate()
                 return true
             }
@@ -109,20 +108,6 @@ class DrawObjects(context: Context, attributeSet: AttributeSet) :
         }
         rectangleStrokes.clear()
     }
-
-//    private fun updateImageRectangleStrokeList(
-//        x: Float?,
-//        y: Float?,
-//        rectangles: MutableList<Rectangle>
-//    ) {
-//        rectangles.forEach { rectangle ->
-//            if (presenter.isRectangle(x, y, rectangle)) {
-//                rectangleStrokes = presenter.getStrokes(rectangle)
-//                return
-//            }
-//        }
-//        rectangleStrokes.clear()
-//    }
 
     private fun getRectangleColor(rectangle: Rectangle) {
         this.rectangle = rectangle
