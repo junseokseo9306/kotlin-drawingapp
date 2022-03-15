@@ -7,6 +7,7 @@ import android.graphics.Canvas
 import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
+import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import data.ImageRectangle
 import data.Rectangle
@@ -15,14 +16,18 @@ import presenter.Contract
 import presenter.Presenter
 
 class DrawObjects(context: Context, attributeSet: AttributeSet) :
-    ConstraintLayout(context, attributeSet), Contract.CustomView {
+    View(context, attributeSet), Contract.CustomView {
     private var rectangle: RegularRectangle? = null
-    private var rectangleStroke: RegularRectangle? = null
+    private var imageRectangle: ImageRectangle? = null
+    private var recentlyClickedObject: Rectangle? = null
     private var presenter: Contract.Presenter = Presenter()
     private var rectangles: MutableList<RegularRectangle> = mutableListOf()
     private var rectangleStrokes: MutableList<StrokeRectangle> = mutableListOf()
     private var bitmapImages: MutableList<Bitmap> = mutableListOf()
     private var bitmapRectangles: MutableList<ImageRectangle> = mutableListOf()
+    private lateinit var mainView: ConstraintLayout
+    private lateinit var temporaryView: TemporaryView
+
     var customListener: CustomListener? = null
     private val TAG = "DrawObject"
 
@@ -35,6 +40,9 @@ class DrawObjects(context: Context, attributeSet: AttributeSet) :
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         val x = event?.x
         val y = event?.y
+//        mainView = this.parent as ConstraintLayout
+        temporaryView = TemporaryView(context, recentlyClickedObject)
+
         when (event?.action) {
             MotionEvent.ACTION_DOWN -> {
                 updateRectangleStrokeList(x, y)
@@ -42,20 +50,24 @@ class DrawObjects(context: Context, attributeSet: AttributeSet) :
                 return true
             }
             MotionEvent.ACTION_MOVE -> {
-                invalidate()
+
+                presenter.removeStrokes()
+                moveRectangles(x, y)
                 return true
             }
             MotionEvent.ACTION_UP -> {
+                recentlyClickedObject?.paint?.alpha = 220
+                invalidate()
+
                 return false
             }
         }
         return false
     }
 
-
     /* 도우미 함수들 */
 
-    private fun drawAll(canvas: Canvas?) {
+    override fun drawAll(canvas: Canvas?) {
         var unifiedRectangles = mutableListOf<Rectangle>()
         unifiedRectangles.addAll(rectangles)
         unifiedRectangles.addAll(rectangleStrokes)
@@ -76,6 +88,14 @@ class DrawObjects(context: Context, attributeSet: AttributeSet) :
             return
         }
         presenter.removeStrokes()
+    }
+
+    private fun moveRectangles(
+        x: Float?,
+        y: Float?,
+    ) {
+        invalidate()
+        temporaryView.getXY(x, y)
     }
 
     fun countRectangles(): String {
@@ -106,32 +126,23 @@ class DrawObjects(context: Context, attributeSet: AttributeSet) :
         }
     }
 
-    private fun getRecentRectangleColor() {
+    private fun getRecentClickedRectangles() {
         this.rectangle = presenter.getRecentClickedRectangle()
-        if(this.rectangle == null) {
+        this.imageRectangle = presenter.getRecentClickedImageRectangle()
+        this.recentlyClickedObject = presenter.getRecentlyClickedObject()
+    }
+
+    private fun getRecentRectangleColor() {
+        getRecentClickedRectangles()
+        if (this.rectangle == null) {
             customListener?.isClicked("NULL")
             return
         }
         customListener?.isClicked("#${this.rectangle?.paint.let { Integer.toHexString(it!!.color) }}")
     }
 
-    override fun drawRectangle(canvas: Canvas?, rectangles: MutableList<RegularRectangle>) {
-        rectangles.forEach { square ->
-            square.draw(canvas)
-        }
-    }
-
-    override fun drawRectangleStroke(
-        canvas: Canvas?,
-        rectanglesStrokesList: MutableList<StrokeRectangle>
-    ) {
-        rectanglesStrokesList.forEach { stroke ->
-            stroke.draw(canvas)
-        }
-    }
-
     fun saveAndGetImage(bitmapImages: MutableList<Bitmap>) {
-        if(bitmapImages.count() != 0) {
+        if (bitmapImages.count() != 0) {
             presenter.makeImageRectangle(bitmapImages[bitmapImages.count() - 1])
         }
         loadImageRectangles()
@@ -140,4 +151,5 @@ class DrawObjects(context: Context, attributeSet: AttributeSet) :
     private fun loadImageRectangles() {
         bitmapRectangles = presenter.getImageRectangle()
     }
+
 }

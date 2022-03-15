@@ -8,13 +8,14 @@ import android.graphics.RectF
 class StrokeRectangle private constructor(
     override val id: String,
     override var rectangle: RectF,
-    val paint: Paint = Paint().apply {
+    override var paint: Paint? = Paint().apply {
         this.color = Color.WHITE
         this.style = Paint.Style.STROKE
+        this.strokeWidth = 10F
     }
 ): Rectangle {
     override fun draw(canvas: Canvas?) {
-        canvas?.drawRect(rectangle, paint)
+        canvas?.drawRect(rectangle, paint!!)
     }
 
     companion object Factory {

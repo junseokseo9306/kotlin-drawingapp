@@ -2,7 +2,9 @@ package presenter
 
 import android.graphics.Bitmap
 import android.graphics.Canvas
+import android.media.Image
 import data.ImageRectangle
+import data.Rectangle
 import data.RegularRectangle
 import data.StrokeRectangle
 
@@ -27,11 +29,17 @@ interface Contract {
         fun makeImageRectangle(bitmap: Bitmap)
 
         fun getRecentClickedRectangle(): RegularRectangle?
+
+        fun getRecentClickedImageRectangle(): ImageRectangle?
+
+        fun getRecentlyClickedObject(): Rectangle?
     }
 
     interface CustomView {
-        fun drawRectangle(canvas: Canvas?, rectangles: MutableList<RegularRectangle>)
+//        fun drawRectangle(canvas: Canvas?, rectangles: MutableList<RegularRectangle>)
+//
+//        fun drawRectangleStroke(canvas: Canvas?, rectangles: MutableList<StrokeRectangle>)
 
-        fun drawRectangleStroke(canvas: Canvas?, rectangles: MutableList<StrokeRectangle>)
+        fun drawAll(canvas: Canvas?)
     }
 }

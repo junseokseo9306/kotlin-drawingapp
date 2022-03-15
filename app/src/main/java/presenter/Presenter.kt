@@ -1,10 +1,7 @@
 package presenter
 
 import android.graphics.Bitmap
-import data.ImageRectangle
-import data.Plane
-import data.RegularRectangle
-import data.StrokeRectangle
+import data.*
 
 class Presenter : Contract.Presenter {
     private val plane = Plane()
@@ -33,6 +30,14 @@ class Presenter : Contract.Presenter {
 
     override fun getRecentClickedRectangle(): RegularRectangle? {
         return plane.getRecentClickedRectangle()
+    }
+
+    override fun getRecentClickedImageRectangle(): ImageRectangle? {
+        return plane.getRecentClickedImageRectangle()
+    }
+
+    override fun getRecentlyClickedObject(): Rectangle? {
+        return plane.getRecentlyClickedObject()
     }
 
     override fun removeStrokes() {

@@ -7,7 +7,7 @@ import android.graphics.RectF
 class RegularRectangle private constructor(
     override val id: String,
     override var rectangle: RectF,
-    var paint: Paint,
+    override var paint: Paint?,
     var clicked: Boolean = false
 ) : Rectangle {
     fun isOnTheRect(x: Float?, y: Float?): Boolean {
@@ -21,7 +21,7 @@ class RegularRectangle private constructor(
     }
 
     override fun draw(canvas: Canvas?) {
-        canvas?.drawRect(rectangle, paint)
+        canvas?.drawRect(rectangle, paint!!)
     }
 
     companion object Factory {

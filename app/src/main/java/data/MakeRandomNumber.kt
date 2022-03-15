@@ -13,6 +13,7 @@ object MakeRandomNumber {
         return "$charA$charB$charC"
     }
 
+    //TODO Pixel to DP conversion needed
     fun makeRandomWidthAndHeight(): RectF {
         return RectF().apply {
             val squareWidth = 250.toFloat()

@@ -1,6 +1,7 @@
 package data
 
 import android.graphics.Bitmap
+import android.media.Image
 
 class Plane {
     fun makeRandomRegularRectangle() {
@@ -49,12 +50,15 @@ class Plane {
     fun lookupRectangleIsOnThePointer(x: Float?, y: Float?): Boolean {
         Repository.imagesRectangleStrokes.forEach { imageRectangle ->
             if (imageRectangle.isOnTheRect(x, y)) {
+                Repository.recentClickedImageRectangle = imageRectangle
+                Repository.recentlyClicked = imageRectangle
                 return true
             }
         }
         Repository.rectangles.forEach { regularRectangle ->
             if (regularRectangle.isOnTheRect(x, y)) {
                 Repository.recentClickedRectangle = regularRectangle
+                Repository.recentlyClicked = regularRectangle
                 return true
             }
         }
@@ -63,6 +67,14 @@ class Plane {
 
     fun getRecentClickedRectangle(): RegularRectangle? {
         return Repository.recentClickedRectangle
+    }
+
+    fun getRecentClickedImageRectangle(): ImageRectangle? {
+        return Repository.recentClickedImageRectangle
+    }
+
+    fun getRecentlyClickedObject(): Rectangle? {
+        return Repository.recentlyClicked
     }
 
     fun makeStrokeRectangle() {

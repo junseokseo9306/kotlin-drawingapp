@@ -9,7 +9,7 @@ class ImageRectangle private constructor(
     override val id: String,
     private val image: Bitmap,
     override var rectangle: RectF,
-    var paint: Paint? = null,
+    override var paint: Paint? = null,
     var clicked: Boolean = false
 ) : Rectangle {
     fun isOnTheRect(x: Float?, y: Float?): Boolean {

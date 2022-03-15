@@ -12,6 +12,10 @@ object Repository {
 
     var recentClickedRectangle: RegularRectangle? = null
 
+    var recentClickedImageRectangle: ImageRectangle? = null
+
+    var recentlyClicked: Rectangle? = null
+
     fun addRectangle(rectangle: RegularRectangle) {
         rectanglesList.add(rectangle)
     }
