@@ -9,7 +9,9 @@ import android.graphics.RectF
 interface Rectangle {
 
     val id: String
+
     var rectangle: RectF
+
     var paint: Paint?
 
     fun draw(canvas: Canvas?)

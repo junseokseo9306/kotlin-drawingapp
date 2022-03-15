@@ -6,3 +6,7 @@ import android.graphics.Bitmap
 interface CustomListener {
     fun isClicked(numbers: String)
 }
+
+interface WidthAndHeightListener {
+    fun showWidthAndHeight(numbers: String)
+}

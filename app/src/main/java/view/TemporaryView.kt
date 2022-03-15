@@ -2,7 +2,10 @@ package view
 
 import android.content.Context
 import android.graphics.Canvas
+import android.util.DisplayMetrics
 import android.view.View
+import android.view.WindowManager
+import android.view.WindowMetrics
 import data.Rectangle
 
 class TemporaryView(context: Context) : View(context) {
@@ -19,8 +22,23 @@ class TemporaryView(context: Context) : View(context) {
     }
 
     fun getXY(x: Float?, y: Float?) {
-        val clickedX = x.let { x as Float }
-        val clickedY = y.let { y as Float }
+        val displayMetrics = resources.displayMetrics
+        val widthMetrics = displayMetrics.widthPixels * .6
+        val heightMetrics = displayMetrics.heightPixels * .75
+
+        var clickedX = x.let { x as Float }
+        var clickedY = y.let { y as Float }
+
+        if(clickedX >= widthMetrics) {
+            clickedX = widthMetrics.toFloat()
+        }
+        if(clickedY <= 0f) {
+            clickedY = 0f
+        }
+        if(clickedY >= heightMetrics) {
+            clickedY = heightMetrics.toFloat()
+        }
+
         val squareWidth = 250.toFloat()
         val squareHeight = 220.toFloat()
         rectangle?.rectangle?.left = clickedX

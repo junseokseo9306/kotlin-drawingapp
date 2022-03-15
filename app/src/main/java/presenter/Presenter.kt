@@ -19,7 +19,6 @@ class Presenter : Contract.Presenter {
         plane.makeStrokeRectangle()
     }
 
-    /* TODO get 인데 set처럼 행동하는 부분 나누기 */
     override fun getStrokes(): MutableList<StrokeRectangle> {
         return plane.getRectangleStrokesList()
     }

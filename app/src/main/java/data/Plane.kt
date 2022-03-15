@@ -39,7 +39,6 @@ class Plane {
             bitmap,
             MakeRandomNumber.makeRandomWidthAndHeight()
         )
-
         Repository.addImageRect(imageRectangle)
     }
 

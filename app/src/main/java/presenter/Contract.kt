@@ -36,9 +36,6 @@ interface Contract {
     }
 
     interface CustomView {
-//        fun drawRectangle(canvas: Canvas?, rectangles: MutableList<RegularRectangle>)
-//
-//        fun drawRectangleStroke(canvas: Canvas?, rectangles: MutableList<StrokeRectangle>)
 
         fun drawAll(canvas: Canvas?)
     }

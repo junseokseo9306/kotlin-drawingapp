@@ -8,7 +8,6 @@ import android.util.AttributeSet
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
-import androidx.constraintlayout.widget.ConstraintLayout
 import data.ImageRectangle
 import data.Rectangle
 import data.StrokeRectangle
@@ -25,10 +24,11 @@ class DrawObjects(context: Context, attributeSet: AttributeSet) :
     private var rectangleStrokes: MutableList<StrokeRectangle> = mutableListOf()
     private var bitmapImages: MutableList<Bitmap> = mutableListOf()
     private var bitmapRectangles: MutableList<ImageRectangle> = mutableListOf()
-    private lateinit var mainView: ConstraintLayout
     private lateinit var temporaryView: TemporaryView
+    private val defaultAlphaValue = 220
 
     var customListener: CustomListener? = null
+    var locationListener: WidthAndHeightListener? = null
     private val TAG = "DrawObject"
 
     override fun onDraw(canvas: Canvas?) {
@@ -40,7 +40,6 @@ class DrawObjects(context: Context, attributeSet: AttributeSet) :
     override fun onTouchEvent(event: MotionEvent?): Boolean {
         val x = event?.x
         val y = event?.y
-//        mainView = this.parent as ConstraintLayout
         temporaryView = TemporaryView(context, recentlyClickedObject)
 
         when (event?.action) {
@@ -56,7 +55,7 @@ class DrawObjects(context: Context, attributeSet: AttributeSet) :
                 return true
             }
             MotionEvent.ACTION_UP -> {
-                recentlyClickedObject?.paint?.alpha = 220
+                recentlyClickedObject?.paint?.alpha = defaultAlphaValue
                 invalidate()
 
                 return false
@@ -68,12 +67,12 @@ class DrawObjects(context: Context, attributeSet: AttributeSet) :
     /* 도우미 함수들 */
 
     override fun drawAll(canvas: Canvas?) {
-        var unifiedRectangles = mutableListOf<Rectangle>()
+        val unifiedRectangles = mutableListOf<Rectangle>()
         unifiedRectangles.addAll(rectangles)
         unifiedRectangles.addAll(rectangleStrokes)
         unifiedRectangles.addAll(bitmapRectangles)
-        unifiedRectangles.forEach {
-            it.draw(canvas)
+        unifiedRectangles.forEach { drawingObjects ->
+            drawingObjects.draw(canvas)
         }
     }
 
@@ -96,6 +95,16 @@ class DrawObjects(context: Context, attributeSet: AttributeSet) :
     ) {
         invalidate()
         temporaryView.getXY(x, y)
+        showRectangleWidthAndHeight()
+    }
+
+    private fun showRectangleWidthAndHeight() {
+        locationListener?.showWidthAndHeight(
+            "${recentlyClickedObject?.rectangle?.left}, " +
+                    "${recentlyClickedObject?.rectangle?.top}, " +
+                    "${recentlyClickedObject?.rectangle?.right}, " +
+                    "${recentlyClickedObject?.rectangle?.bottom}"
+        )
     }
 
     fun countRectangles(): String {

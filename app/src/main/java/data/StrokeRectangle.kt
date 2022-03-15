@@ -9,9 +9,9 @@ class StrokeRectangle private constructor(
     override val id: String,
     override var rectangle: RectF,
     override var paint: Paint? = Paint().apply {
-        this.color = Color.WHITE
+        this.color = Color.BLUE
         this.style = Paint.Style.STROKE
-        this.strokeWidth = 10F
+        this.strokeWidth = 15F
     }
 ): Rectangle {
     override fun draw(canvas: Canvas?) {
