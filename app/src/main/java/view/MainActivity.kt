@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         val rectangleCount = findViewById<TextView>(R.id.textview_rectangle_count)
         val rectangleColorButton = findViewById<Button>(R.id.textview_background_color_change)
         val photoLoader = findViewById<Button>(R.id.insert_photo_button)
-        var bitmapImages = mutableListOf<Bitmap>()
+        var bitmapImage: MutableList<Bitmap> = mutableListOf()
 
         customView.customListener = object : CustomListener {
             override fun isClicked(numbers: String) {
@@ -39,6 +39,7 @@ class MainActivity : AppCompatActivity() {
 
         removeButton.setOnClickListener {
             customView.removeRectangleAndStrokes()
+            rectangleColorButton.text = "clear"
             rectangleCount.text = "사각형수: ${customView.countRectangles()}"
         }
 
@@ -49,12 +50,12 @@ class MainActivity : AppCompatActivity() {
         val startForResult =
             registerForActivityResult(ActivityResultContracts.GetContent()) { image ->
                 val bitmap = ImageDecoder.decodeBitmap(ImageDecoder.createSource(contentResolver, image))
-                bitmapImages.add(bitmap)
+                bitmapImage.add(bitmap)
             }
 
         photoLoader.setOnClickListener {
             startForResult.launch("image/*")
-            customView.saveImages(bitmapImages)
+            customView.saveAndGetImage(bitmapImage)
         }
     }
 }

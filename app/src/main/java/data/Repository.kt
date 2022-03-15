@@ -1,24 +1,26 @@
 package data
 
 object Repository {
-    private var rectanglesList = mutableListOf<Rectangle>()
-    val rectangles: MutableList<Rectangle> = rectanglesList
+    private var rectanglesList = mutableListOf<RegularRectangle>()
+    val rectangles: MutableList<RegularRectangle> = rectanglesList
 
-    private var rectangleStrokeLists = mutableListOf<Rectangle>()
-    val rectangleStrokes: MutableList<Rectangle> = rectangleStrokeLists
+    private var rectangleStrokeLists = mutableListOf<StrokeRectangle>()
+    val rectangleStrokes: MutableList<StrokeRectangle> = rectangleStrokeLists
 
-    private var imageRectangleStrokeList = mutableListOf<Rectangle>()
-    val imagesRectangleStrokes:MutableList<Rectangle> = imageRectangleStrokeList
+    private var imageRectangleStrokeList = mutableListOf<ImageRectangle>()
+    val imagesRectangleStrokes: MutableList<ImageRectangle> = imageRectangleStrokeList
 
-    fun addRectangle(rectangle: Rectangle) {
+    var recentClickedRectangle: RegularRectangle? = null
+
+    fun addRectangle(rectangle: RegularRectangle) {
         rectanglesList.add(rectangle)
     }
 
-    fun removeRectangle(rectangle: Rectangle) {
+    fun removeRectangle(rectangle: RegularRectangle) {
         rectanglesList.remove(rectangle)
     }
 
-    fun addStroke(rectangle: Rectangle) {
+    fun addStroke(rectangle: StrokeRectangle) {
         rectangleStrokeLists.add(rectangle)
     }
 
@@ -26,13 +28,13 @@ object Repository {
         rectangleStrokeLists.clear()
     }
 
-    fun addImageRect(rectangle: Rectangle) {
+    fun addImageRect(rectangle: ImageRectangle) {
         imageRectangleStrokeList.add(rectangle)
     }
 
-    fun changeRectangleColor(rectangle: Rectangle): MutableList<Rectangle>? {
+    fun changeRectangleColor(rectangle: RegularRectangle): MutableList<RegularRectangle>? {
         rectanglesList.forEach { rectangleInTheList ->
-            if(rectangleInTheList.id == rectangle.id){
+            if (rectangleInTheList.id == rectangle.id) {
                 rectangleInTheList.apply {
                     val r = (0..255).random()
                     val g = (0..255).random()
