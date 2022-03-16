@@ -7,8 +7,8 @@ object Repository {
     private var rectangleStrokeLists = mutableListOf<StrokeRectangle>()
     val rectangleStrokes: MutableList<StrokeRectangle> = rectangleStrokeLists
 
-    private var imageRectangleStrokeList = mutableListOf<ImageRectangle>()
-    val imagesRectangleStrokes: MutableList<ImageRectangle> = imageRectangleStrokeList
+    private var imageRectangleList = mutableListOf<ImageRectangle>()
+    val imagesRectangles: MutableList<ImageRectangle> = imageRectangleList
 
     var recentClickedRectangle: RegularRectangle? = null
 
@@ -33,7 +33,8 @@ object Repository {
     }
 
     fun addImageRect(rectangle: ImageRectangle) {
-        imageRectangleStrokeList.add(rectangle)
+        imageRectangleList.add(rectangle)
+        println("repository: imageRectangle count ${imagesRectangles.count()}")
     }
 
     fun changeRectangleColor(rectangle: RegularRectangle): MutableList<RegularRectangle>? {

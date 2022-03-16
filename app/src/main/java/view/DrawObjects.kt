@@ -153,6 +153,7 @@ class DrawObjects(context: Context, attributeSet: AttributeSet) :
     fun saveAndGetImage(bitmapImages: MutableList<Bitmap>) {
         if (bitmapImages.count() != 0) {
             presenter.makeImageRectangle(bitmapImages[bitmapImages.count() - 1])
+            println("imageRectangle : DrawObjects ${bitmapImages.count()}")
         }
         loadImageRectangles()
     }

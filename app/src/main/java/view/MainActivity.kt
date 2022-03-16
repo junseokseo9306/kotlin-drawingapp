@@ -69,11 +69,12 @@ class MainActivity : AppCompatActivity() {
             registerForActivityResult(ActivityResultContracts.GetContent()) { image ->
                 val bitmap = ImageDecoder.decodeBitmap(ImageDecoder.createSource(contentResolver, image))
                 bitmapImage.add(bitmap)
+                customView.saveAndGetImage(bitmapImage)
+                println("main: count : ${bitmapImage.count()}")
             }
 
         photoLoader.setOnClickListener {
             startForResult.launch("image/*")
-            customView.saveAndGetImage(bitmapImage)
         }
     }
 }
