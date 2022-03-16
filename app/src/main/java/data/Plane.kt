@@ -75,6 +75,8 @@ class Plane {
         return Repository.recentlyClicked
     }
 
+
+    //TODO strokes can be unlimited -> need to make a cap for limited numbers of strokes manufacturing
     fun makeStrokeRectangle() {
         Repository.imagesRectangles.forEach { imageRectangle ->
             if(imageRectangle.clicked) {

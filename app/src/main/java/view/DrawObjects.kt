@@ -51,10 +51,11 @@ class DrawObjects(context: Context, attributeSet: AttributeSet) :
             MotionEvent.ACTION_MOVE -> {
 
                 presenter.removeStrokes()
-                moveRectangles(x, y)
+                moveRectanglesOnTemporaryView(x, y)
                 return true
             }
             MotionEvent.ACTION_UP -> {
+                // alpha value is personally decided
                 recentlyClickedObject?.paint?.alpha = defaultAlphaValue
                 invalidate()
 
@@ -64,7 +65,7 @@ class DrawObjects(context: Context, attributeSet: AttributeSet) :
         return false
     }
 
-    /* 도우미 함수들 */
+    /* Helper Function */
 
     override fun drawAll(canvas: Canvas?) {
         val unifiedRectangles = mutableListOf<Rectangle>()
@@ -89,7 +90,7 @@ class DrawObjects(context: Context, attributeSet: AttributeSet) :
         presenter.removeStrokes()
     }
 
-    private fun moveRectangles(
+    private fun moveRectanglesOnTemporaryView(
         x: Float?,
         y: Float?,
     ) {
